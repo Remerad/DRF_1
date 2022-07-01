@@ -3,13 +3,14 @@
 #from rest_framework import api_view
 from rest_framework.response import Response
 from rest_framework import generics
-from rest_framework.generics import ListAPIView
+from rest_framework.generics import ListAPIView, ListCreateAPIView, RetrieveAPIView, RetrieveUpdateAPIView
 from rest_framework.permissions import IsAdminUser
 from rest_framework.response import Response
 
-from smart_home.measurement.models import Sensor
-from smart_home.measurement.models import Measurement
-from smart_home.measurement.serializers import SensorSerializer
+from .models import Sensor
+from .models import Measurement
+from .serializers import SensorSerializer, oneSensorData, MeasurementSerializer
+
 
 # @api_view(['GET'])
 # def demo(request):
@@ -17,20 +18,26 @@ from smart_home.measurement.serializers import SensorSerializer
 #     return Response(data)
 
 
-class SensorView(ListAPIView):
+class post_sensor(ListCreateAPIView):
     queryset = Sensor.objects.all()
     serializer_class = SensorSerializer
-    def post(self, request):
-        return Response({'status': 'ОК'})
 
 
-class MeasurementView(ListAPIView):
+class oneSensorView(RetrieveAPIView):
+    queryset = Sensor.objects.all()
+    serializer_class = oneSensorData
+
+
+class allSensorView(ListAPIView):
+    queryset = Sensor.objects.all()
+    serializer_class = SensorSerializer
+
+
+class patchSensor(RetrieveUpdateAPIView):
+    queryset = Sensor.objects.all()
+    serializer_class = SensorSerializer
+
+
+class postMeasurement(ListCreateAPIView):
     queryset = Measurement.objects.all()
-    serializer_class = SensorSerializer
-    def post(self, request):
-        return Response({'status': 'ОК'})
-
-class SensorList(generics.ListCreateAPIView):
-    queryset = Sensor.objects.all()
-    serializer_class = SensorSerializer
-    permission_classes = [IsAdminUser]
+    serializer_class = MeasurementSerializer
