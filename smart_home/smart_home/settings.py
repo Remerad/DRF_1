@@ -83,7 +83,7 @@ DATABASES = {
         'NAME': 'netology_smart_home',
         'HOST': '127.0.0.1',
         'USER': 'postgres',
-        'PASSWORD': 'o12KinvJdE',#os.getenv('PG_pasw'),
+        'PASSWORD': os.getenv('PG_pasw'),
         'PORT': '5432',
     }
 }
